@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Özel Sayfa</title>  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#000;
+      color:#fff;
+      height:100vh;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      transition:background 5s ease;
+      position:relative;
+    }
+
+    /* 🎬 VIGNETTE (kenar kararma) */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.95) 100%);
+      z-index:5;
+    }
+
+    /* 🌫 FILM GRAIN */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:6;
+      opacity:0.08;
+      background-image:url('https://www.transparenttextures.com/patterns/noise.png');
+      animation:grain 1s steps(2) infinite;
+    }
+
+    @keyframes grain{
+      0%{transform:translate(0,0)}
+      25%{transform:translate(-2%,2%)}
+      50%{transform:translate(2%,-2%)}
+      75%{transform:translate(-2%,-1%)}
+      100%{transform:translate(0,0)}
+    }
+
+    #intro{
+      position:fixed;
+      inset:0;
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+    }
+
+    #logo{
+      font-size:38px;
+      font-weight:bold;
+      color:#e50914;
+      opacity:0;
+      transform:scale(0.8);
+      animation:netflixIntro 2.8s ease forwards;
+      text-align:center;
+      padding:0 20px;
+      z-index:10;
+    }
+
+    @keyframes netflixIntro{
+      0%{opacity:0;transform:scale(0.7);filter:blur(8px)}
+      30%{opacity:1;transform:scale(1.1);filter:blur(0)}
+      60%{opacity:1;transform:scale(1)}
+      100%{opacity:0;transform:scale(1.15)}
+    }
+
+    #lockScreen{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.85);
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:20;
+      backdrop-filter:blur(6px);
+    }
+
+    #lockScreen h2{
+      text-shadow:0 0 20px rgba(255,255,255,0.2);
+    }
+
+    #lockScreen p{
+      opacity:0.7;
+      font-size:14px;
+      margin-top:5px;
+    }
+
+    input{
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      text-align:center;
+      margin-top:10px;
+      outline:none;
+    }
+
+    button{
+      margin-top:10px;
+      padding:10px 15px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    .box{max-width:650px;padding:25px;z-index:10;position:relative}
+
+    .hidden{display:none}
+
+    .show{animation:fadeIn 1.2s ease forwards}
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    h1{
+      font-size:30px;
+      text-shadow:0 0 25px rgba(255,255,255,0.08);
+    }
+
+    p{
+      line-height:1.7;
+      opacity:0.9;
+      white-space:pre-line;
+    }
+
+    .fade-out{
+      animation:fadeOut 5s forwards;
+    }
+
+    @keyframes fadeOut{
+      from{opacity:1}
+      to{opacity:0}
+    }
+  </style></head>
+<body><div id="intro">
+  <div id="logo">Doğum günün kutlu olsun<br>Çatlak Fıstık</div>
+</div><div id="lockScreen">
+  <h2>Bu sayfa özel 🔐</h2>
+  <p>İpucu: 6 haneli bir tarih...</p>
+  <input type="password" id="password" placeholder="Şifre" />
+  <button onclick="checkPassword()">Giriş</button>
+</div><div class="box hidden" id="content">
+  <h1>İyi ki doğdun 🎂</h1>
+  <p id="story"></p>
+</div><script>
+const text = `Asya…
+
+Kısa bir zaman içinde hayatımda yer edinen nadir insanlardansın.
+
+Bazı insanlar uzun yıllar değil, kısa anlarla iz bırakır.
+Bizim hikâyemiz de biraz öyleydi.
+
+Her şey hızlı geçti ama geride kalan hisler kolay silinmiyor.
+
+Yeni yaşında sana sadece mutluluk değil, içini gerçekten rahat ettirecek başlangıçlar diliyorum.`;
+
+let i = 0;
+
+function typeWriter(){
+  if(i < text.length){
+    document.getElementById("story").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 35);
+  } else {
+    setTimeout(fadeOut, 1200);
+  }
+}
+
+function fadeOut(){
+  document.body.classList.add("fade-out");
+}
+
+window.onload = function(){
+  setTimeout(()=>{
+    document.getElementById("intro").style.display="none";
+    document.getElementById("lockScreen").style.display="flex";
+  },2800);
+};
+
+function checkPassword(){
+  const pass=document.getElementById("password").value;
+
+  if(pass==="290704"){
+    document.getElementById("lockScreen").style.display="none";
+    document.getElementById("content").classList.remove("hidden");
+    document.getElementById("content").classList.add("show");
+
+    typeWriter();
+    openFullscreen();
+  } else {
+    alert("Yanlış şifre ❌");
+  }
+}
+
+function openFullscreen(){
+  const e=document.documentElement;
+  if(e.requestFullscreen) e.requestFullscreen();
+}
+</script></body>
+</html>
