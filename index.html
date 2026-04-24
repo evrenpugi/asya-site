@@ -87,7 +87,15 @@ button{
   display:none;
   max-width:600px;
   padding:20px;
-  line-height:1.6;
+  line-height:1.8;
+  position:relative;
+}
+
+/* 💌 MESSAGE STYLE */
+#text{
+  font-size:16px;
+  letter-spacing:0.4px;
+  text-shadow:0 0 10px rgba(255,255,255,0.08);
 }
 
 /* 🎧 MUSIC BUTTON */
@@ -132,7 +140,7 @@ button{
 
 <!-- 📜 CONTENT -->
 <div id="content">
-  <h1>İyi ki doğdun çatlak fıstık 🎂</h1>
+  <h1>İyi ki doğdun 🎂</h1>
   <p id="text"></p>
 </div>
 
@@ -163,7 +171,7 @@ function randomColor(){
 
 createConfetti();
 
-// 💌 MESSAGE
+// 💌 SİNEMATİK MESAJ
 const message = `Asya...
 
 Bazen bazı insanlar hayatımıza uzun süre kalmak için değil,
@@ -171,7 +179,8 @@ Bazen bazı insanlar hayatımıza uzun süre kalmak için değil,
 
 Sen de benim hayatımda böyle bir yer bıraktın.
 
-Bazen bir gülüş, bazen bir konuşma,
+Bazen bir gülüş,
+bazen bir konuşma,
 insanın içindeki en sakin yeri bile değiştirebiliyor.
 
 Seninle geçen o kısa zaman,
@@ -179,15 +188,22 @@ uzun yıllara sığacak kadar değerliydi.
 
 İyi ki doğdun...`;
 
-// ✍️ TYPE EFFECT
-let i=0;
+// ✍️ GELİŞMİŞ TYPE EFFECT
+let i = 0;
+let textEl = document.getElementById("text");
+
 function type(){
-  if(i<message.length){
-    document.getElementById("text").innerHTML+=
-      (message[i]==="\n"?"<br>":message[i]);
+  if(i < message.length){
+    let char = message[i];
+
+    if(char === "\n"){
+      textEl.innerHTML += "<br><br>";
+    } else {
+      textEl.innerHTML += `<span style="opacity:0.95">${char}</span>`;
+    }
 
     i++;
-    setTimeout(type,50);
+    setTimeout(type,60);
   }
 }
 
@@ -199,9 +215,9 @@ function openFullscreen(){
   }
 }
 
-// 🎧 MUSIC CONTROL (MANUEL)
-let musicStarted=false;
+// 🎧 MUSIC CONTROL
 let music=document.getElementById("bgMusic");
+let musicStarted=false;
 
 function toggleMusic(){
   if(!musicStarted){
@@ -242,7 +258,7 @@ function check(){
   }
 }
 
-// 🔥 FIREBASE LOG
+// 📊 GELİŞMİŞ FIREBASE LOG
 const DB_URL="https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
 
 function logUser(){
@@ -250,7 +266,10 @@ function logUser(){
     method:"POST",
     body:JSON.stringify({
       time:new Date().toLocaleString(),
-      device:navigator.userAgent
+      device:navigator.userAgent,
+      language:navigator.language,
+      screen:`${window.innerWidth}x${window.innerHeight}`,
+      platform:navigator.platform
     })
   }).catch(()=>{});
 }
