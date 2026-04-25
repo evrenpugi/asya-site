@@ -34,7 +34,6 @@ body{
   justify-content:center;
 }
 
-/* 📱 LOGO SAFE */
 #logo{
   font-family:'Bebas Neue', sans-serif;
   font-size:clamp(28px, 8vw, 60px);
@@ -74,23 +73,29 @@ button{
   cursor:pointer;
 }
 
-/* 📜 CONTENT (FIXED LAYOUT) */
+/* 📜 CONTENT */
 #content{
   display:none;
   max-width:600px;
-  padding:80px 20px 20px 20px; /* 🔥 ÜST BOŞLUK ARTTI */
+  padding:80px 20px 20px 20px;
   line-height:1.7;
   word-break:break-word;
   -webkit-font-smoothing:antialiased;
   transition:all 2.5s ease;
 }
 
-/* 💌 TEXT */
-#text{
-  font-size:16px;
-  letter-spacing:0.2px;
-  line-height:1.6;
-  white-space:pre-wrap;
+/* 💌 SMOOTH FLOW TEXT */
+.line{
+  opacity:0;
+  transform:translateY(15px);
+  animation:fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 /* 🎥 END EFFECT */
@@ -98,9 +103,10 @@ button{
   transform:scale(1.15);
   filter:blur(6px);
   opacity:0.4;
+  transition:all 2.5s ease;
 }
 
-/* 🎧 MUSIC BUTTON (SAFE POSITION) */
+/* 🎧 MUSIC BUTTON */
 #musicBtn{
   position:fixed;
   bottom:30px;
@@ -130,7 +136,7 @@ button{
   z-index:20;
 }
 
-/* 🌑 BLACK FADE */
+/* 🌑 FADE BLACK */
 #fadeBlack{
   position:fixed;
   inset:0;
@@ -162,7 +168,7 @@ button{
 
 <div id="content">
   <h1>İyi ki doğdun 🎂</h1>
-  <p id="text"></p>
+  <div id="text"></div>
 </div>
 
 <div id="ending">
@@ -194,31 +200,39 @@ Bir daha seni rahatsız etmeyeceğimi söylemiştim ama doğum günün senin iç
 
 İyi ki doğdun çatlak fıstık...`;
 
-// ✍️ TYPE
-let i=0;
-let textEl=document.getElementById("text");
+let lines = message.split("\n");
+let index = 0;
 
+let textEl = document.getElementById("text");
+
+// ✨ SMOOTH FLOW ANIMATION
 function type(){
-  if(i<message.length){
-    let c=message[i];
-    textEl.innerHTML += (c === "\n") ? "<br>" : c;
-    i++;
-    setTimeout(type,60);
+  if(index < lines.length){
+    let line = document.createElement("div");
+    line.className = "line";
+    line.innerHTML = lines[index];
+
+    textEl.appendChild(line);
+
+    index++;
+
+    setTimeout(type, 600); // akış hızı
   } else {
-    setTimeout(showEnding,2500);
+    setTimeout(showEnding, 2500);
   }
 }
 
 // 🎬 END EFFECT
 function showEnding(){
-  const end=document.getElementById("ending");
-  const content=document.getElementById("content");
-  const fade=document.getElementById("fadeBlack");
+  const end = document.getElementById("ending");
+  const content = document.getElementById("content");
+  const fade = document.getElementById("fadeBlack");
 
   content.classList.add("end-effect");
 
-  setTimeout(()=>{ end.style.opacity=1; },800);
-  setTimeout(()=>{ fade.style.opacity=1; },2500);
+  setTimeout(()=>{ end.style.opacity = 1; }, 800);
+
+  setTimeout(()=>{ fade.style.opacity = 1; }, 2500);
 }
 
 // 🎧 MUSIC
