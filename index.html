@@ -90,11 +90,11 @@ button{
   line-height:1.6;
 }
 
-/* 💌 MESSAGE (SIKI TASARIM) */
+/* 💌 MESSAGE */
 #text{
   font-size:16px;
   letter-spacing:0.3px;
-  line-height:1.4; /* 🔥 DARALTILDI */
+  line-height:1.4;
   text-shadow:0 0 10px rgba(255,255,255,0.08);
 }
 
@@ -110,7 +110,21 @@ button{
   background:linear-gradient(135deg,#ff4d6d,#4cc9f0);
   color:white;
   cursor:pointer;
-  box-shadow:0 0 15px rgba(255,77,109,0.6);
+}
+
+/* 🎬 ENDING */
+#ending{
+  position:fixed;
+  inset:0;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  opacity:0;
+  transition:opacity 2s ease;
+  z-index:20;
 }
 </style>
 </head>
@@ -140,8 +154,13 @@ button{
 
 <!-- 📜 CONTENT -->
 <div id="content">
-  <h1>İyi ki doğdun çatlak fıstık 🎂</h1>
+  <h1>İyi ki doğdun 🎂</h1>
   <p id="text"></p>
+</div>
+
+<!-- 🎬 ENDING -->
+<div id="ending">
+  <h2>Sonsuza kadar aklımda kalacaksın...</h2>
 </div>
 
 <!-- 🎧 MUSIC BUTTON -->
@@ -188,7 +207,7 @@ uzun yıllara sığacak kadar değerliydi.
 
 İyi ki doğdun...`;
 
-// ✍️ TYPE EFFECT (KOMPAKT)
+// ✍️ TYPE EFFECT
 let i = 0;
 let textEl = document.getElementById("text");
 
@@ -197,14 +216,21 @@ function type(){
     let char = message[i];
 
     if(char === "\n"){
-      textEl.innerHTML += "<br>"; // 🔥 DARALTILDI
+      textEl.innerHTML += "<br>";
     } else {
       textEl.innerHTML += char;
     }
 
     i++;
     setTimeout(type,60);
+  } else {
+    setTimeout(showEnding, 2500); // 🎬 kapanış
   }
+}
+
+// 🎬 ENDING
+function showEnding(){
+  document.getElementById("ending").style.opacity = 1;
 }
 
 // 🖥️ FULLSCREEN
@@ -215,7 +241,7 @@ function openFullscreen(){
   }
 }
 
-// 🎧 MUSIC CONTROL
+// 🎧 MUSIC
 let music=document.getElementById("bgMusic");
 let musicStarted=false;
 
