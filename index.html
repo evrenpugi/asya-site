@@ -206,6 +206,31 @@ button{
 
 <div id="fadeBlack"></div>
 
+
+<!-- 209. satırdan önce ekle -->
+<div id="lyricsScreen" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:25;
+  color:#fff;
+  font-size:24px;
+  text-align:center;
+  padding:20px;
+  word-break:break-word;
+  overflow-y:auto;
+">
+  <div id="currentLyric"></div>
+</div>
+
+
+
+
+
+
 <button id="musicBtn" onclick="toggleMusic()">🎧 Müziği Başlat</button>
 
 <script>
@@ -299,21 +324,48 @@ function openFullscreen(){
 }
 
 // 🎧 MUSIC
-let music=document.getElementById("bgMusic");
-let musicStarted=false;
-
 function toggleMusic(){
   if(!musicStarted){
     music.volume=0.4;
     music.play().catch(()=>{});
     musicStarted=true;
     document.getElementById("musicBtn").innerText="⏸ Müziği Durdur";
+    document.getElementById("lyricsScreen").style.display="flex";
+    syncLyrics();
   } else {
     music.pause();
     musicStarted=false;
     document.getElementById("musicBtn").innerText="🎧 Müziği Başlat";
+    document.getElementById("lyricsScreen").style.display="none";
   }
 }
+
+function syncLyrics(){
+  const updateLyric = () => {
+    const currentTime = music.currentTime;
+    let displayText = "";
+    
+    for(let i = 0; i < lyrics.length; i++){
+      const currentLyric = lyrics[i];
+      const nextTime = lyrics[i+1] ? lyrics[i+1].time : 93;
+      
+      if(currentTime >= currentLyric.time && currentTime < nextTime){
+        displayText = currentLyric.text;
+        break;
+      }
+    }
+    
+    document.getElementById("currentLyric").innerText = displayText;
+    
+    if(!music.paused){
+      requestAnimationFrame(updateLyric);
+    }
+  };
+  
+  updateLyric();
+}
+
+
 
 // 🚀 INTRO
 window.onload=()=>{
