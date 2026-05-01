@@ -159,6 +159,8 @@ button{
   flex-direction:column;
   text-align:center;
   padding:20px;
+  /* Yumuşak bir geçiş için eklendi */
+  transition: all 2.5s ease-in-out; 
 }
 
 /* 💌 TEXT */
@@ -171,11 +173,11 @@ button{
   text-align:center;
 }
 
-/* 🎥 END EFFECT */
+/* 🎥 END EFFECT (Mesajın silinme animasyonu) */
 #content.end-effect{
-  transform:scale(1.15);
-  filter:blur(6px);
-  opacity:0.4;
+  transform: translateY(-30px) scale(0.95); /* Hafifçe yukarı kayıp küçülür */
+  filter: blur(12px); /* Yavaşça bulanıklaşır */
+  opacity: 0; /* Tamamen kaybolur */
 }
 
 /* 🎧 MUSIC BUTTON */
@@ -198,7 +200,7 @@ button{
   cursor:pointer;
 }
 
-/* 🎬 ENDING */
+/* 🎬 ENDING (Son yazının başlangıç durumu) */
 #ending{
   position:fixed;
   inset:0;
@@ -213,10 +215,18 @@ button{
 
   opacity:0;
   pointer-events:none;
-
-  transition:opacity 2s ease;
+  
+  transform: scale(0.85); /* Karanlıkta biraz küçük başlar */
+  /* Hem görünürlük hem de büyüme animasyonu */
+  transition: opacity 3s ease, transform 4s ease-out; 
 
   z-index:20;
+}
+
+/* Son yazının ekranda belirdiği an */
+#ending.show {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* 🌑 FINAL BLACK SCREEN */
@@ -235,7 +245,6 @@ button{
 
 <body>
 
-<!-- 🌌 YILDIZLAR -->
 <div id="stars"></div>
 
 <div id="confetti"></div>
@@ -434,38 +443,32 @@ function type(){
   }
 }
 
-// 🎬 ENDING
+// 🎬 ENDING (Geçiş Animasyonu)
 function showEnding(){
 
-  const end =
-  document.getElementById("ending");
+  const end = document.getElementById("ending");
+  const content = document.getElementById("content");
 
-  const content =
-  document.getElementById("content");
-
+  // 1. Ana metni yavaşça yukarı kaydırarak ve bulanıklaştırarak sil
   content.classList.add("end-effect");
 
-  // Yazı çıkıyor
-  setTimeout(()=>{
+  // 2. Ana metin tamamen kaybolduktan (2.5 saniye) sonra bitiş metnini sinematik olarak getir
+  setTimeout(() => {
+    end.classList.add("show");
+  }, 2500);
 
-    end.style.opacity = 1;
+  // 3. Bitiş metnini bir süre ekranda tut, sonra onu da yavaşça sil ve yıldızlara geç
+  setTimeout(() => {
+    end.classList.remove("show"); // Bitiş yazısı solmaya başlar
+    end.style.opacity = 0; 
+    
+    // 4. Bitiş yazısı da kaybolduktan sonra arka planı tamamen temizle
+    setTimeout(() => {
+      content.style.display = "none";
+      showStars();
+    }, 3000); // Solma animasyonu bittikten sonra
 
-  },800);
-
-  // Yıldız ekranı
-  setTimeout(()=>{
-
-    end.style.opacity = 0;
-
-    // Blur kaldır
-    content.classList.remove("end-effect");
-
-    // İçeriği tamamen gizle
-    content.style.display = "none";
-
-    showStars();
-
-  },5000);
+  }, 8500); // 2.5 saniye bekleme + 6 saniye ekranda okuma süresi
 }
 
 // 🌌 STARS SCREEN
