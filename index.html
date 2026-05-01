@@ -471,22 +471,40 @@ function showEnding(){
   }, 8500); // 2.5 saniye bekleme + 6 saniye ekranda okuma süresi
 }
 
-// 🌌 STARS SCREEN
+// 🌌 STARS SCREEN & SYNCED MUSIC FADE
 function showStars(){
-
-  // 🎉 Konfetileri gizle
-  document.querySelectorAll(".confetti")
-  .forEach(c=>{
+  document.querySelectorAll(".confetti").forEach(c=>{
     c.style.opacity="0";
   });
 
-  const stars =
-  document.getElementById("stars");
+  const stars = document.getElementById("stars");
+  const fade = document.getElementById("fadeBlack");
+  const music = document.getElementById("bgMusic");
 
-  const fade =
-  document.getElementById("fadeBlack");
-
+  // Yıldızlar yavaşça belirir
   stars.style.opacity = 1;
+
+  // 🎵 MÜZİĞİ EKRANLA SENKRON KISMA (Fade-out)
+  // Yıldızlar çıktıktan 5 saniye sonra müzik yavaşça kısılmaya başlar
+  setTimeout(() => {
+    let fadeAudio = setInterval(() => {
+      // Ses seviyesini her 200ms'de bir 0.01 azaltır
+      if (music.volume > 0.01) {
+        music.volume -= 0.01;
+      } else {
+        music.volume = 0;
+        music.pause(); // Tamamen sustuğunda durdur
+        clearInterval(fadeAudio);
+      }
+    }, 200); // Toplamda yaklaşık 8-10 saniye sürer
+  }, 5000);
+
+  // 🌑 TAM KARARMA (Siyah ekran gelişi)
+  // Yıldızları izleme süresi bittiğinde ekran kararır
+  setTimeout(()=>{
+    fade.style.opacity = 1;
+  }, 20000); // Yıldızlar 20 saniye görünür kalır
+}
 
   // Final fade
   setTimeout(()=>{
