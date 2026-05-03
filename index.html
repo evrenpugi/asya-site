@@ -495,23 +495,44 @@ function showEnding(){
   // 1. Ana metni yavaşça yukarı kaydırarak ve bulanıklaştırarak sil
   content.classList.add("end-effect");
 
-  // 2. Ana metin tamamen kaybolduktan (2.5 saniye) sonra bitiş metnini sinematik olarak getir
+  // 2. Ana metin tamamen kaybolduktan sonra bitiş yazısını getir
   setTimeout(() => {
+
     end.classList.add("show");
+
   }, 2500);
 
-  // 3. Bitiş metnini bir süre ekranda tut, sonra onu da yavaşça sil ve yıldızlara geç
+  // 3. Bitiş yazısı bir süre ekranda kalsın
   setTimeout(() => {
-    end.classList.remove("show"); // Bitiş yazısı solmaya başlar
-    end.style.opacity = 0; 
-    
-    // 4. Bitiş yazısı da kaybolduktan sonra arka planı tamamen temizle
-    setTimeout(() => {
-      content.style.display = "none";
-      showStars();
-    }, 3000); // Solma animasyonu bittikten sonra
 
-  }, 8500); // 2.5 saniye bekleme + 6 saniye ekranda okuma süresi
+    // Yazıyı kapat
+    end.classList.remove("show");
+    end.style.opacity = 0;
+
+    // 🎉 Konfetileri yavaşça gizle
+    document.querySelectorAll(".confetti")
+    .forEach(c=>{
+      c.style.opacity = "0";
+    });
+
+    // Yazı tamamen kaybolunca
+    setTimeout(() => {
+
+      // İçeriği tamamen kaldır
+      content.style.display = "none";
+
+      // Konfetileri DOM'dan tamamen sil
+      document.querySelectorAll(".confetti")
+      .forEach(c=>{
+        c.remove();
+      });
+
+      // 🌌 Yıldız ekranını başlat
+      showStars();
+
+    }, 3000);
+
+  }, 8500);
 }
 
 // 🌌 STARS SCREEN
@@ -552,10 +573,26 @@ function showStars(){
 
       // tamamen bitti
       if(opacity >= 1){
-        clearInterval(syncFade);
-        music.pause();
-        logAction("Final Ekranı Bitti / Tamamen Karardı"); // Son log
-      }
+
+  clearInterval(syncFade);
+
+  music.pause();
+
+  logAction("Final Ekranı Bitti / Tamamen Karardı");
+
+  // 📱 Tam ekrandan çık
+  if(document.fullscreenElement){
+
+    document.exitFullscreen()
+    .catch(()=>{});
+
+  }else if(document.webkitFullscreenElement){
+
+    document.webkitExitFullscreen();
+
+  }
+
+}
 
     },80);
 
