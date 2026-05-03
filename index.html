@@ -473,10 +473,10 @@ function showEnding(){
 // 🌌 STARS SCREEN
 function showStars(){
 
-  // 🎉 Konfetileri gizle
+  // 🎉 Konfetileri kaldır
   document.querySelectorAll(".confetti")
   .forEach(c=>{
-    c.style.opacity="0";
+    c.remove();
   });
 
   const stars =
@@ -485,14 +485,39 @@ function showStars(){
   const fade =
   document.getElementById("fadeBlack");
 
+  // 🌌 yıldızları göster
   stars.style.opacity = 1;
 
-  // Final fade
+  // ⏳ 6 saniye yıldız ekranı bekle
   setTimeout(()=>{
 
-    fade.style.opacity = 1;
+    let opacity = 0;
+    let volume = music.volume;
 
-  },30000);
+    // 🌑 ekran + müzik birlikte kapanır
+    const syncFade = setInterval(()=>{
+
+      opacity += 0.02;
+      volume -= 0.02;
+
+      fade.style.opacity = opacity;
+
+      if(volume > 0){
+        music.volume = volume;
+      }
+
+      // tamamen bitti
+      if(opacity >= 1){
+
+        clearInterval(syncFade);
+
+        music.pause();
+
+      }
+
+    },80);
+
+  },6000);
 }
 
 // 🖥️ FULLSCREEN
