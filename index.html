@@ -29,6 +29,8 @@ body{
   -webkit-text-size-adjust:100%;
 }
 
+
+
 /* 🌌 YILDIZLAR */
 #stars{
   position:fixed;
@@ -300,7 +302,7 @@ button{
   <div>
 
     <h2 style="margin-bottom:18px;">
-      Uzun bir süre aklımda kalacaksın
+     Müziğin ve yıldızların tadını çıkar 
     </h2>
 
     <p style="
@@ -314,7 +316,7 @@ button{
         font-size:20px;
         font-weight:bold;
       ">
-        Çatlak fıstık...
+        İçimden gelen bir şeydi ve bu şekilde kutlamak istedim sende benimkini kutlamıştın 😊 Kendine de çok iyi bak çatlak fıstık...
       </span>
 
     </p>
@@ -399,6 +401,9 @@ function createStars(){
 }
 
 createStars();
+
+
+
 
 // 🎉 CONFETTI
 function createConfetti(){
@@ -528,12 +533,13 @@ function showEnding(){
       });
 
       // 🌌 Yıldız ekranını başlat
-      showStars();
-
-    }, 3000);
-
-  }, 8500);
-}
+      showStars();  
+  
+    }, 3000);  
+  
+  }, 8500);  
+}  
+      
 
 // 🌌 STARS SCREEN
 function showStars(){
@@ -547,63 +553,25 @@ function showStars(){
   const stars =
   document.getElementById("stars");
 
-  const fade =
-  document.getElementById("fadeBlack");
-
   // 🌌 yıldızları göster
   stars.style.opacity = 1;
 
-  // ⏳ 6 saniye yıldız ekranı bekle
-  setTimeout(()=>{
+  logAction("Yıldız Ekranı Açıldı");
+  
+  // ☄️ sürekli kayan yıldız oluştur
+setInterval(()=>{
 
-    let opacity = 0;
-    let volume = music.volume;
+  createShootingStar();
 
-    // 🌑 ekran + müzik birlikte kapanır
-    const syncFade = setInterval(()=>{
-
-      opacity += 0.02;
-      volume -= 0.02;
-
-      fade.style.opacity = opacity;
-
-      if(volume > 0){
-        music.volume = volume;
-      }
-
-      // tamamen bitti
-      if(opacity >= 1){
-
-  clearInterval(syncFade);
-
-  music.pause();
-
-  logAction("Final Ekranı Bitti / Tamamen Karardı");
-
-  // 📱 Tam ekrandan çık
-  if(document.fullscreenElement){
-
-    document.exitFullscreen()
-    .catch(()=>{});
-
-  }else if(document.webkitFullscreenElement){
-
-    document.webkitExitFullscreen();
-
-  }
-
-}
-
-    },80);
-
-  },6000);
+},2500);
+  
 }
 
 // 🖥️ FULLSCREEN
 function openFullscreen(){
 
   let elem=document.documentElement;
-
+  
   const request=
     elem.requestFullscreen ||
     elem.webkitRequestFullscreen ||
