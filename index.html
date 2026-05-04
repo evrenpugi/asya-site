@@ -251,7 +251,7 @@ button{
 
 <div id="confetti"></div>
 
-<audio id="bgMusic" loop preload="auto">
+<audio id="bgMusic" preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
@@ -630,6 +630,55 @@ function toggleMusic(){
     logAction("Müzik Etkileşimi", { durum: "Durduruldu" }); // Log
   }
 }
+
+// 🎵 Müzik bitince siteyi sinematik şekilde kapat
+music.addEventListener("ended", ()=>{
+
+  const fade =
+  document.getElementById("fadeBlack");
+
+  // 🌑 ekranı yavaşça karart
+  fade.style.opacity = "1";
+
+  // 🌌 yıldızları azalt
+  document.getElementById("stars")
+  .style.opacity = "0";
+
+  // 🎧 müzik butonunu gizle
+  document.getElementById("musicBtn")
+  .style.opacity = "0";
+
+  logAction("Müzik Bitti / Site Kapanıyor");
+
+  // ⏳ siyah ekran sonrası çık
+  setTimeout(()=>{
+
+    // fullscreen çık
+    if(document.fullscreenElement){
+
+      document.exitFullscreen()
+      .catch(()=>{});
+
+    }else if(document.webkitFullscreenElement){
+
+      document.webkitExitFullscreen();
+
+    }
+
+    // sayfayı kapat
+    window.close();
+
+    // kapanmazsa boş sayfaya yönlendir
+    setTimeout(()=>{
+      window.location.href="about:blank";
+    },1000);
+
+  },5000);
+
+});
+
+
+  
 
 // 🚀 INTRO
 window.onload=()=>{
