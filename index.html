@@ -29,37 +29,6 @@ body{
   -webkit-text-size-adjust:100%;
 }
 
-/* 🌌 REPEAT WELCOME */
-#repeatWelcome{
-  position:fixed;
-  inset:0;
-  background:#000;
-  color:#fff;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  font-size:clamp(24px,6vw,46px);
-  letter-spacing:1px;
-  z-index:50;
-  opacity:0;
-  transition:opacity 1.5s ease;
-}
-
-/* 🔁 REPEAT CHOICE */
-#repeatChoice{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000;
-  color:#fff;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:12px;
-  z-index:40;
-  padding:20px;
-}
-
 /* 🌌 YILDIZLAR */
 #stars{
   position:fixed;
@@ -241,10 +210,6 @@ button{
 <div id="stars"></div>
 <div id="confetti"></div>
 
-<div id="repeatWelcome">
-  Tekrar hoş geldin 🌌
-</div>
-
 <audio id="bgMusic" preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -276,24 +241,6 @@ button{
 
   <button onclick="check()">
     Giriş
-  </button>
-
-</div>
-
-<div id="repeatChoice">
-
-  <h2>Tekrar hoş geldin 🌌</h2>
-
-  <p style="opacity:0.8;font-size:14px;">
-    Mesajı tekrar okumak ister misin?
-  </p>
-
-  <button onclick="watchMessageAgain()">
-    💌 Mesajı Tekrar İzle
-  </button>
-
-  <button onclick="skipToStars()">
-    ✨ Direkt Yıldızlara Geç
   </button>
 
 </div>
@@ -366,7 +313,6 @@ const DB_URL =
 "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs";
 
 let logCounter = 1;
-let isRepeatVisit = false;
 
 // 📅 Oturum bilgisi
 const sessionDateObj = new Date();
@@ -720,53 +666,6 @@ function showStars(){
   logAction("Yıldız Ekranı Açıldı");
 }
 
-// 🔁 REPEAT OPTIONS
-function watchMessageAgain(){
-
-  document.getElementById("repeatChoice")
-  .style.display = "none";
-
-  document.getElementById("content")
-  .classList.remove("end-effect");
-
-  document.getElementById("content")
-  .style.opacity = "1";
-
-  document.getElementById("content")
-  .style.filter = "none";
-
-  document.getElementById("content")
-  .style.transform = "none";
-
-  document.getElementById("content")
-  .style.display = "flex";
-
-  resetTyping();
-
-  logAction("Tekrar Ziyaret / Mesaj Tekrar İzle");
-
-  type();
-}
-
-function skipToStars(){
-
-  document.getElementById("repeatChoice")
-  .style.display = "none";
-
-  document.getElementById("content")
-  .style.display = "none";
-
-  document.getElementById("ending")
-  .classList.remove("show");
-
-  document.getElementById("ending")
-  .style.opacity = "0";
-
-  showStars();
-
-  logAction("Tekrar Ziyaret / Mesaj Skip / Yıldızlara Geçti");
-}
-
 // 🖥️ FULLSCREEN
 function openFullscreen(){
 
@@ -821,7 +720,7 @@ function toggleMusic(){
   }
 }
 
-// 🎵 MÜZİK BİTİNCE TEKRAR GİRİŞ
+// 🎵 MÜZİK BİTİNCE SİTEDEN ÇIKIŞ
 music.addEventListener("ended",()=>{
 
   const fade =
@@ -835,7 +734,7 @@ music.addEventListener("ended",()=>{
   document.getElementById("musicBtn")
   .style.opacity = "0";
 
-  logAction("Müzik Bitti / Tekrar Girişe Dönüyor");
+  logAction("Müzik Bitti / Site Kapanıyor");
 
   setTimeout(()=>{
 
@@ -849,103 +748,32 @@ music.addEventListener("ended",()=>{
       document.webkitExitFullscreen();
     }
 
-    resetTyping();
+    window.close();
 
-    music.currentTime = 0;
-    musicStarted = false;
+    setTimeout(()=>{
 
-    document.getElementById("content")
-    .classList.remove("end-effect");
+      window.location.href =
+      "about:blank";
 
-    document.getElementById("content")
-    .style.display = "none";
-
-    document.getElementById("ending")
-    .classList.remove("show");
-
-    document.getElementById("ending")
-    .style.opacity = "0";
-
-    document.getElementById("fadeBlack")
-    .style.opacity = "0";
-
-    document.getElementById("stars")
-    .style.opacity = "0";
-
-    document.getElementById("musicBtn")
-    .style.opacity = "1";
-
-    document.getElementById("musicBtn")
-    .innerText = "🎧 Müziği Başlat";
-
-    document.getElementById("pass")
-    .value = "";
-
-    document.getElementById("lock")
-    .style.display = "flex";
-
-    logAction("Tekrar Giriş Ekranı Açıldı");
+    },1000);
 
   },5000);
 });
 
-// 🚀 INTRO + FIRST / REPEAT VISIT
+// 🚀 INTRO
 window.onload = ()=>{
 
   logVisitWithLocation();
 
-  const hasVisited =
-  localStorage.getItem("asyaVisited");
+  setTimeout(()=>{
 
-  isRepeatVisit = !!hasVisited;
+    document.getElementById("intro")
+    .style.display = "none";
 
-  if(hasVisited){
+    document.getElementById("lock")
+    .style.display = "flex";
 
-    logAction("Tekrar Ziyaret");
-
-    const repeat =
-    document.getElementById("repeatWelcome");
-
-    repeat.style.display = "flex";
-
-    setTimeout(()=>{
-      repeat.style.opacity = "1";
-    },100);
-
-    setTimeout(()=>{
-
-      repeat.style.opacity = "0";
-
-      setTimeout(()=>{
-
-        repeat.style.display = "none";
-
-        document.getElementById("intro")
-        .style.display = "none";
-
-        document.getElementById("lock")
-        .style.display = "flex";
-
-      },1500);
-
-    },2500);
-
-  }else{
-
-    localStorage.setItem("asyaVisited","true");
-
-    logAction("İlk Ziyaret");
-
-    setTimeout(()=>{
-
-      document.getElementById("intro")
-      .style.display = "none";
-
-      document.getElementById("lock")
-      .style.display = "flex";
-
-    },5000);
-  }
+  },5000);
 };
 
 // 🔐 LOGIN
@@ -963,18 +791,12 @@ function check(){
     document.getElementById("lock")
     .style.display = "none";
 
-    if(isRepeatVisit){
+    document.getElementById("content")
+    .style.display = "flex";
 
-      document.getElementById("repeatChoice")
-      .style.display = "flex";
+    resetTyping();
 
-    }else{
-
-      document.getElementById("content")
-      .style.display = "flex";
-
-      type();
-    }
+    type();
 
   }else{
 
