@@ -356,43 +356,44 @@ onclick="toggleMusic()">
 <script>
 
 // 📊 DETAYLI FIREBASE LOG SİSTEMİ
-const DB_URL = "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
+const DB_URL = "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs";
+
+// sayaç
+let logCounter = 1;
 
 function logAction(actionName, extraData = {}) {
 
-  // 📅 Tarih oluştur
   const now = new Date();
 
+  // tarih formatı
   const tarih =
     now.getFullYear() + "-" +
     String(now.getMonth()+1).padStart(2,"0") + "-" +
     String(now.getDate()).padStart(2,"0");
 
+  // saat formatı
   const saat =
     String(now.getHours()).padStart(2,"0") + "-" +
     String(now.getMinutes()).padStart(2,"0") + "-" +
     String(now.getSeconds()).padStart(2,"0");
 
-  // 🔥 Firebase kayıt adı
-  const logKey =
-    `${actionName}_${tarih}_${saat}`;
+  // firebase kayıt adı
+  const key =
+    `${logCounter}_${actionName}_${tarih}_${saat}`;
 
-  fetch(
-    `https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs/${logKey}.json`,
-    {
-      method: "PUT",
+  logCounter++;
 
-      body: JSON.stringify({
-        time: now.toLocaleString('tr-TR'),
-        action: actionName,
-        detail: extraData,
-        device: navigator.userAgent,
-        screen: `${window.innerWidth}x${window.innerHeight}`,
-        isInstagram: navigator.userAgent.includes("Instagram")
-      })
-    }
-
-  ).catch(()=>{});
+  fetch(`${DB_URL}/${encodeURIComponent(key)}.json`,{
+    method:"PUT",
+    body:JSON.stringify({
+      time: now.toLocaleString('tr-TR'),
+      action: actionName,
+      detail: extraData,
+      device: navigator.userAgent,
+      screen: `${window.innerWidth}x${window.innerHeight}`,
+      isInstagram: navigator.userAgent.includes("Instagram")
+    })
+  }).catch(()=>{})
 }
 
 async function logVisitWithLocation() {
