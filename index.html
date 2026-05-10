@@ -359,17 +359,40 @@ onclick="toggleMusic()">
 const DB_URL = "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
 
 function logAction(actionName, extraData = {}) {
-  fetch(DB_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      time: new Date().toLocaleString('tr-TR'),
-      action: actionName,
-      detail: extraData,
-      device: navigator.userAgent,
-      screen: `${window.innerWidth}x${window.innerHeight}`,
-      isInstagram: navigator.userAgent.includes("Instagram")
-    })
-  }).catch(() => {});
+
+  // 📅 Tarih oluştur
+  const now = new Date();
+
+  const tarih =
+    now.getFullYear() + "-" +
+    String(now.getMonth()+1).padStart(2,"0") + "-" +
+    String(now.getDate()).padStart(2,"0");
+
+  const saat =
+    String(now.getHours()).padStart(2,"0") + "-" +
+    String(now.getMinutes()).padStart(2,"0") + "-" +
+    String(now.getSeconds()).padStart(2,"0");
+
+  // 🔥 Firebase kayıt adı
+  const logKey =
+    `${actionName}_${tarih}_${saat}`;
+
+  fetch(
+    `https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs/${logKey}.json`,
+    {
+      method: "PUT",
+
+      body: JSON.stringify({
+        time: now.toLocaleString('tr-TR'),
+        action: actionName,
+        detail: extraData,
+        device: navigator.userAgent,
+        screen: `${window.innerWidth}x${window.innerHeight}`,
+        isInstagram: navigator.userAgent.includes("Instagram")
+      })
+    }
+
+  ).catch(()=>{});
 }
 
 async function logVisitWithLocation() {
