@@ -83,7 +83,10 @@ body{
   border-radius:2px;
   animation:confettiFall linear infinite;
   will-change:transform, opacity;
-  transition:opacity 2.5s ease;
+  transition:
+  opacity 5s ease,
+  filter 5s ease,
+  transform 5s ease;
 }
 
 @keyframes confettiFall{
@@ -695,7 +698,11 @@ function fadeOutConfetti(callback){
   );
 
   confettis.forEach(c=>{
+
     c.style.opacity = "0";
+    c.style.filter = "blur(6px)";
+    c.style.animationPlayState = "running";
+
   });
 
   setTimeout(()=>{
@@ -708,7 +715,7 @@ function fadeOutConfetti(callback){
       callback();
     }
 
-  },2500);
+  },5000);
 }
 
 function randomColor(){
@@ -1040,9 +1047,14 @@ function check(){
 
     createConfetti();
 
-    resetTyping();
+resetTyping();
 
-    type();
+// ✍️ Daktilo yazısı 3 saniye sonra başlasın
+setTimeout(()=>{
+
+  type();
+
+},3000);
 
   }else{
 
