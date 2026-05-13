@@ -83,7 +83,7 @@ body{
   border-radius:2px;
   animation:confettiFall linear infinite;
   will-change:transform, opacity;
-  transition:opacity 3s ease;
+  transition:opacity 5s ease;
 }
 
 @keyframes confettiFall{
@@ -140,6 +140,18 @@ body{
       rotate(720deg);
     opacity:0;
   }
+}
+
+/* 🎞️ KONFETİ YAVAŞ SÖNME */
+body.confetti-fading .confetti{
+  animation-play-state:paused;
+  opacity:0 !important;
+  transition:opacity 5s ease !important;
+}
+
+body.confetti-fading .confetti-burst{
+  opacity:0 !important;
+  transition:opacity 5s ease !important;
 }
 
 /* 🎬 INTRO */
@@ -603,6 +615,8 @@ document.addEventListener("mouseleave",resetStars);
 // 🎉 PROFESSIONAL CONFETTI
 function createConfetti(){
 
+  document.body.classList.remove("confetti-fading");
+
   document
   .querySelectorAll(".confetti, .confetti-burst")
   .forEach(c=>{
@@ -704,26 +718,23 @@ function createConfettiBurst(){
 
 function fadeOutConfetti(callback){
 
-  const confettis =
-  document.querySelectorAll(
-    ".confetti, .confetti-burst"
-  );
-
-  confettis.forEach(c=>{
-    c.style.opacity = "0";
-  });
+  document.body.classList.add("confetti-fading");
 
   setTimeout(()=>{
 
-    confettis.forEach(c=>{
+    document
+    .querySelectorAll(".confetti, .confetti-burst")
+    .forEach(c=>{
       c.remove();
     });
+
+    document.body.classList.remove("confetti-fading");
 
     if(callback){
       callback();
     }
 
-  },3000);
+  },5000);
 }
 
 function randomColor(){
@@ -845,7 +856,7 @@ function showEnding(){
 
     },800);
 
-  },12000);
+  },11000);
 }
 
 // ⏳ YILDIZ SAYAÇ
