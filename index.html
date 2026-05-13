@@ -84,9 +84,8 @@ body{
   animation:confettiFall linear infinite;
   will-change:transform, opacity;
   transition:
-  opacity 5s ease,
-  filter 5s ease,
-  transform 5s ease;
+    opacity 6s ease,
+    filter 6s ease;
 }
 
 @keyframes confettiFall{
@@ -120,8 +119,7 @@ body{
   z-index:60;
   opacity:1;
   border-radius:2px;
-  animation:confettiBurst 2.8s 
-  cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation:confettiBurst 4.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change:transform, opacity;
 }
 
@@ -209,7 +207,9 @@ button{
   flex-direction:column;
   text-align:center;
   padding:20px;
-  transition:all 2.5s ease-in-out;
+  transition:
+    opacity 2s ease,
+    transform 2s ease;
   z-index:10;
 }
 
@@ -225,8 +225,7 @@ button{
 
 /* 🎥 END EFFECT */
 #content.end-effect{
-  transform:translateY(-30px) scale(0.95);
-  filter:blur(12px);
+  transform:translateY(-20px) scale(0.98);
   opacity:0;
 }
 
@@ -254,7 +253,7 @@ button{
     inset 0 1px 0 rgba(255,255,255,0.08);
 
   font-size:12px;
-  letter-spacing:0.4px;
+  letter-spacing:0.3px;
 
   transition:
     transform 0.25s ease,
@@ -266,11 +265,6 @@ button{
 #musicBtn:active{
   transform:scale(0.96);
 }
-
-#musicBtn:hover{
-  background:rgba(255,255,255,0.12);
-}
-
 
 /* 🎬 ENDING */
 #ending{
@@ -285,7 +279,9 @@ button{
   opacity:0;
   pointer-events:none;
   transform:scale(0.85);
-  transition:opacity 3s ease, transform 4s ease-out; 
+  transition:
+    opacity 2.5s ease,
+    transform 2.5s ease;
   z-index:20;
 }
 
@@ -607,8 +603,6 @@ document.addEventListener("touchend",resetStars);
 document.addEventListener("mouseleave",resetStars);
 
 // 🎉 PROFESSIONAL CONFETTI
-let confettiStarted = false;
-
 function createConfetti(){
 
   document
@@ -616,8 +610,6 @@ function createConfetti(){
   .forEach(c=>{
     c.remove();
   });
-
-  confettiStarted = true;
 
   createConfettiBurst();
 
@@ -698,15 +690,8 @@ function createConfettiBurst(){
     const y =
     Math.sin(angle) * distance;
 
-    c.style.setProperty(
-      "--x",
-      x + "px"
-    );
-
-    c.style.setProperty(
-      "--y",
-      y + "px"
-    );
+    c.style.setProperty("--x", x + "px");
+    c.style.setProperty("--y", y + "px");
 
     c.style.borderRadius =
     Math.random() > 0.5 ? "50%" : "2px";
@@ -715,7 +700,7 @@ function createConfettiBurst(){
 
     setTimeout(()=>{
       c.remove();
-    },3000);
+    },4300);
   }
 }
 
@@ -727,11 +712,9 @@ function fadeOutConfetti(callback){
   );
 
   confettis.forEach(c=>{
-
     c.style.opacity = "0";
     c.style.filter = "blur(6px)";
     c.style.animationPlayState = "running";
-
   });
 
   setTimeout(()=>{
@@ -744,7 +727,7 @@ function fadeOutConfetti(callback){
       callback();
     }
 
-  },5000);
+  },6000);
 }
 
 function randomColor(){
@@ -834,28 +817,35 @@ function showEnding(){
   const content =
   document.getElementById("content");
 
+  const stars =
+  document.getElementById("stars");
+
   content.classList.add("end-effect");
 
   setTimeout(()=>{
 
     end.classList.add("show");
 
-  },2500);
+  },2200);
 
   setTimeout(()=>{
 
     end.classList.remove("show");
-    end.style.opacity = 0;
+    end.style.opacity = "0";
+
+    stars.style.opacity = "1";
 
     fadeOutConfetti(()=>{
 
       content.style.display = "none";
 
-      showStars();
+      logAction("Yıldız Ekranı Açıldı");
+
+      startStarCountdown();
 
     });
 
-  },12000);
+  },12500);
 }
 
 // ⏳ YILDIZ SAYAÇ
@@ -921,21 +911,16 @@ function startStarCountdown(){
   },500);
 }
 
-// 🌌 STARS SCREEN
-function showStars(){
-
-  const stars =
-  document.getElementById("stars");
-
-  stars.style.opacity = 1;
-
-  logAction("Yıldız Ekranı Açıldı");
-
-  startStarCountdown();
-}
-
 // 🖥️ FULLSCREEN
 function openFullscreen(){
+
+  const isAndroid =
+  /Android/i.test(navigator.userAgent);
+
+  if(isAndroid){
+    logAction("Android Fullscreen Atlandı");
+    return;
+  }
 
   let elem =
   document.documentElement;
@@ -1076,14 +1061,13 @@ function check(){
 
     createConfetti();
 
-resetTyping();
+    resetTyping();
 
-// ✍️ Daktilo yazısı 3 saniye sonra başlasın
-setTimeout(()=>{
+    setTimeout(()=>{
 
-  type();
+      type();
 
-},3000);
+    },3000);
 
   }else{
 
