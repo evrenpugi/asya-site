@@ -371,6 +371,21 @@ document.getElementById("text");
 
 let typeTimer = null;
 
+// 📜 Kullanıcı yukarı kaydırırsa otomatik aşağı çekmeyi durdurur
+let userScrolledText = false;
+
+textEl.addEventListener("scroll",()=>{
+
+  const distanceFromBottom =
+  textEl.scrollHeight -
+  textEl.scrollTop -
+  textEl.clientHeight;
+
+  userScrolledText =
+  distanceFromBottom > 80;
+
+});
+
 function resetTyping(){
 
   if(typeTimer){
@@ -379,7 +394,9 @@ function resetTyping(){
   }
 
   i = 0;
+  userScrolledText = false;
   textEl.innerHTML = "";
+  textEl.scrollTop = 0;
 }
 
 function type(){
@@ -397,9 +414,12 @@ function type(){
 
     i++;
 
-textEl.scrollTop = textEl.scrollHeight;
+    if(!userScrolledText){
+      textEl.scrollTop = textEl.scrollHeight;
+    }
 
-typeTimer = setTimeout(type,75);
+    typeTimer = setTimeout(type,75);
+
   }else{
 
     typeTimer = null;
