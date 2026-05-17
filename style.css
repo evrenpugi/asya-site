@@ -360,7 +360,6 @@ button{
 #ending{
   position:fixed;
   inset:0;
-  background:#000;
   color:#fff;
   display:flex;
   align-items:center;
@@ -373,6 +372,37 @@ button{
     opacity 2.5s ease,
     transform 2.5s ease;
   z-index:20;
+  overflow:hidden;
+
+  background:
+    radial-gradient(circle at 18% 22%, rgba(76,201,240,0.12), transparent 28%),
+    radial-gradient(circle at 82% 28%, rgba(247,37,133,0.10), transparent 30%),
+    radial-gradient(circle at 50% 85%, rgba(229,9,20,0.08), transparent 35%),
+    linear-gradient(180deg, #030712 0%, #000 100%);
+}
+
+#ending::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.48) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px);
+  background-size:80px 80px, 140px 140px;
+  background-position:0 0, 35px 60px;
+  opacity:0.16;
+  pointer-events:none;
+}
+
+#ending::after{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.045);
+  filter:blur(70px);
+  pointer-events:none;
 }
 
 #ending.show{
@@ -402,6 +432,30 @@ button{
   display:block;
   margin-bottom:18px;
 }
+
+#ending > div{
+  position:relative;
+  z-index:2;
+  width:calc(100% - 42px);
+  max-width:720px;
+  padding:28px 22px;
+  border-radius:24px;
+
+  background:rgba(255,255,255,0.055);
+  border:1px solid rgba(255,255,255,0.12);
+
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+
+  box-shadow:
+    0 24px 70px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+#ending h2{
+  text-shadow:0 0 22px rgba(255,255,255,0.18);
+}
+
 
 /* 🌑 FINAL BLACK SCREEN */
 #fadeBlack{
