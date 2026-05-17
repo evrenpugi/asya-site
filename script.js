@@ -397,8 +397,9 @@ function type(){
 
     i++;
 
-    typeTimer = setTimeout(type,75);
+textEl.scrollTop = textEl.scrollHeight;
 
+typeTimer = setTimeout(type,75);
   }else{
 
     typeTimer = null;
