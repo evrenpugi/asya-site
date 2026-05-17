@@ -351,7 +351,7 @@ Bugün doğum günün... ve neler yaşasam da bunu es geçmek istemedim.
 
 Bir daha seni rahatsız etmeyeceğimi söylemiştim,rahatsız ettiysem özür dilerim. Ama bugün senin için önemli bir gün ve içimden böyle bir şey yapmak geldi.
 
-Şunu bilmeni isterim, sana karşı hiçbir zaman kötü bir his taşımadım. Mayıs ayında hazırladım bu siteyi hislerim hâlâ aynı. Çünkü bazı şeyler bitse bile, insanda kalan güzel hisler kolay kolay bitmiyor.
+Şunu bilmeni isterim, sana karşı hiçbir zaman kötü bir his taşımadım. Siteyi Mayıs ayında hazırladım ve hislerim hâlâ aynı. Çünkü bazı şeyler bitse bile, insanda kalan güzel hisler kolay kolay bitmiyor.
 
 Hayat bazen bizi farklı yerlere götürüyor. Belki bazı şeyler olması gerektiği gibi olmuyor. Ama bu yaşanan güzel şeylerin değerini azaltmıyor.
 
