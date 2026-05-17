@@ -281,6 +281,8 @@ button{
   flex-direction:column;
   text-align:center;
   padding:22px;
+  box-sizing:border-box;
+  overflow:hidden;
   transition:
     opacity 2s ease,
     transform 2s ease;
@@ -292,8 +294,9 @@ button{
   letter-spacing:0.2px;
   line-height:1.55;
   white-space:pre-wrap;
-  width:100%;
+  width:calc(100% - 32px);
   max-width:650px;
+  box-sizing:border-box;
   max-height:58vh;
   overflow-y:auto;
   text-align:center;
