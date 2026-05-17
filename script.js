@@ -374,15 +374,26 @@ let typeTimer = null;
 // 📜 Kullanıcı yukarı kaydırırsa otomatik aşağı çekmeyi durdurur
 let userScrolledText = false;
 
+// Kullanıcı karta dokunur dokunmaz otomatik aşağı çekmeyi durdur
+textEl.addEventListener("touchstart",()=>{
+  userScrolledText = true;
+},{passive:true});
+
+textEl.addEventListener("wheel",()=>{
+  userScrolledText = true;
+},{passive:true});
+
+// Kullanıcı tekrar en alta gelirse otomatik akış devam etsin
 textEl.addEventListener("scroll",()=>{
 
   const distanceFromBottom =
-  textEl.scrollHeight -
-  textEl.scrollTop -
-  textEl.clientHeight;
+    textEl.scrollHeight -
+    textEl.scrollTop -
+    textEl.clientHeight;
 
-  userScrolledText =
-  distanceFromBottom > 80;
+  if(distanceFromBottom < 12){
+    userScrolledText = false;
+  }
 
 });
 
@@ -541,14 +552,6 @@ function startStarCountdown(){
 
 // 🖥️ FULLSCREEN
 function openFullscreen(){
-
-  const isAndroid =
-  /Android/i.test(navigator.userAgent);
-
-  if(isAndroid){
-    logAction("Android Fullscreen Atlandı");
-    return;
-  }
 
   let elem =
   document.documentElement;
