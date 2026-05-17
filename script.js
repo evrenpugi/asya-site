@@ -345,19 +345,19 @@ Bazen bazı insanlar hayatımıza uzun süre kalmak için değil, çok kısa anl
 
 Sen de benim hayatımda tam olarak böyle bir yer bıraktın.
 
-Gülüşünü hatırlamak, birlikte yaşanan küçük anları düşünmek bile insanın içindeki en ufak yeri değiştirebiliyor. Seninle geçen o kısa zaman, belki de uzun yıllara sığacak kadar değerliydi benim için.
+Gülüşün,kokun,gözlerin, birlikte yaşanan küçük anıları düşünmek bile insanın içindeki en ufak yeri değiştirebiliyor. Seninle geçen o kısa zaman, belki de uzun yıllara sığacak kadar değerliydi benim için.
 
-Bugün doğum günün... ve ne olursa olsun bunu es geçmek istemedim.
+Bugün doğum günün... ve neler yaşasam da bunu es geçmek istemedim.
 
-Bir daha seni rahatsız etmeyeceğimi söylemiştim, biliyorum. Eğer bu mesajla sözümü bozup seni rahatsız ettiysem özür dilerim. Ama bugün senin için önemli bir gün ve içimden yazmak geldi.
+Bir daha seni rahatsız etmeyeceğimi söylemiştim,rahatsız ettiysem özür dilerim. Ama bugün senin için önemli bir gün ve içimden böyle bir şey yapmak geldi.
 
-Şunu bilmeni isterim; sana karşı hiçbir zaman kötü bir his taşımadım. Çünkü bazı şeyler bitse bile, insanda kalan güzel hisler kolay kolay bitmiyor.
+Şunu bilmeni isterim, sana karşı hiçbir zaman kötü bir his taşımadım. Mayıs ayında hazırladım bu siteyi hislerim hâlâ aynı. Çünkü bazı şeyler bitse bile, insanda kalan güzel hisler kolay kolay bitmiyor.
 
-Belki hayat bazen bizi farklı yerlere götürüyor. Belki bazı şeyler olması gerektiği gibi olmuyor. Ama bu yaşanan güzel şeylerin değerini azaltmıyor.
+Hayat bazen bizi farklı yerlere götürüyor. Belki bazı şeyler olması gerektiği gibi olmuyor. Ama bu yaşanan güzel şeylerin değerini azaltmıyor.
 
-Sen benim hayatımda iz bırakan nadir insanlardan biri oldun.
+Sen benim hayatımda iz bırakan nadir insanlardan biri oldun. Her şey için teşekkürler.
 
-Bu arada... "Ben daha çok seviyorum" oyununda sanırım ben kazandım 🙃
+Bu arada... ben daha çok seviyorum oyununu sanırım ben kazandım 🙃
 
 Yeni yaşının sana huzur, mutluluk, sağlık ve gerçekten hak ettiğin güzel şeyleri getirmesini diliyorum.
 
