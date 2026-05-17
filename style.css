@@ -1,0 +1,397 @@
+body{
+  margin:0;
+  background:#000;
+  color:#fff;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  font-family:Arial;
+  -webkit-text-size-adjust:100%;
+}
+
+/* 🎉 CONFETTI LAYER */
+#confettiLayer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:28;
+  opacity:1;
+  transition:opacity 6s ease;
+}
+
+/* 🌌 YILDIZLAR */
+#stars{
+  position:fixed;
+  inset:0;
+  opacity:0;
+  transition:opacity 2.5s ease;
+  pointer-events:none;
+  z-index:5;
+}
+
+.star-wrap{
+  position:absolute;
+  transition:transform 0.5s ease;
+}
+
+.star{
+  background:white;
+  border-radius:50%;
+  animation:twinkle linear infinite;
+}
+
+@keyframes twinkle{
+  0%{opacity:0.2; transform:scale(1);}
+  50%{opacity:1; transform:scale(1.4);}
+  100%{opacity:0.2; transform:scale(1);}
+}
+
+/* ⏳ YILDIZ SAYAÇ */
+#starCountdown{
+  position:fixed;
+  bottom:28px;
+  left:20px;
+  color:white;
+  font-size:13px;
+  letter-spacing:1px;
+  opacity:0;
+  transition:opacity 2s ease;
+  z-index:18;
+  pointer-events:none;
+  text-shadow:0 0 12px rgba(255,255,255,0.4);
+}
+
+/* 🎉 CONFETTI */
+.confetti{
+  position:fixed;
+  top:-20px;
+  pointer-events:none;
+  opacity:0.85;
+  border-radius:2px;
+  animation:confettiFall linear infinite;
+  will-change:transform;
+}
+
+@keyframes confettiFall{
+  0%{
+    transform:translateY(-20px) translateX(0) rotate(0deg);
+  }
+  100%{
+    transform:translateY(115vh) translateX(var(--drift)) rotate(720deg);
+  }
+}
+
+.confetti-burst{
+  position:fixed;
+  left:50%;
+  top:50%;
+  pointer-events:none;
+  opacity:1;
+  border-radius:2px;
+  animation:confettiBurst 4.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change:transform, opacity;
+}
+
+@keyframes confettiBurst{
+  0%{
+    transform:translate(-50%,-50%) scale(0.3) rotate(0deg);
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(1)
+      rotate(720deg);
+    opacity:0;
+  }
+}
+
+/* 🎬 INTRO */
+#intro{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:25;
+}
+
+#logo{
+  font-family:'Bebas Neue', sans-serif;
+  font-size:clamp(28px,8vw,60px);
+  padding:0 20px;
+  max-width:100%;
+  word-break:break-word;
+  color:#e50914;
+  text-shadow:
+    0 0 15px #e50914,
+    0 0 40px #e50914;
+  animation:introAnim 5s ease forwards;
+}
+
+@keyframes introAnim{
+  0%{opacity:0; transform:scale(0.5); filter:blur(15px);}
+  20%{opacity:1; transform:scale(1.1); filter:blur(2px);}
+  50%{opacity:1; filter:blur(0);}
+  100%{opacity:0; transform:scale(1.2);}
+}
+
+/* 🔐 LOCK */
+#lock{
+  display:none;
+  position:fixed;
+  inset:0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  padding:24px;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(76,201,240,0.16), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(247,37,133,0.14), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(229,9,20,0.12), transparent 35%),
+    linear-gradient(180deg, #050812 0%, #000 100%);
+}
+
+#lock::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+  background-size:70px 70px, 120px 120px;
+  background-position:0 0, 35px 55px;
+  opacity:0.18;
+  pointer-events:none;
+}
+
+#lock::after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  filter:blur(60px);
+  pointer-events:none;
+}
+
+#lock h2,
+#lock p,
+#lock input,
+#lock button{
+  position:relative;
+  z-index:2;
+}
+
+#lock h2{
+  margin:0 0 12px;
+  font-size:24px;
+  letter-spacing:0.4px;
+  text-shadow:0 0 18px rgba(255,255,255,0.18);
+}
+
+#lock p{
+  max-width:300px;
+  margin:0 0 16px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.10);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+input{
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#pass{
+  width:210px;
+  text-align:center;
+  font-size:20px;
+  letter-spacing:6px;
+  color:white;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.16);
+  outline:none;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+#pass::placeholder{
+  letter-spacing:0.5px;
+  color:rgba(255,255,255,0.5);
+}
+
+#pass:focus{
+  border-color:rgba(76,201,240,0.45);
+  box-shadow:
+    0 0 0 3px rgba(76,201,240,0.12),
+    0 12px 35px rgba(0,0,0,0.4);
+}
+
+#lock button{
+  width:210px;
+  margin-top:14px;
+  color:white;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.16);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+#lock button:active{
+  transform:scale(0.97);
+}
+
+/* 📜 CONTENT */
+#content{
+  display:none;
+  position:fixed;
+  inset:0;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+  transition:
+    opacity 2s ease,
+    transform 2s ease;
+  z-index:10;
+}
+
+#text{
+  font-size:16px;
+  letter-spacing:0.2px;
+  line-height:1.6;
+  white-space:pre-wrap;
+  max-width:600px;
+  text-align:center;
+}
+
+#content.end-effect{
+  transform:translateY(-20px) scale(0.98);
+  opacity:0;
+}
+
+/* 🎧 MUSIC BUTTON */
+#musicBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:40;
+  padding:9px 13px;
+  border:none;
+  border-radius:11px;
+  cursor:pointer;
+
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  color:#f5f7ff;
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  font-size:12px;
+  letter-spacing:0.3px;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.4s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+#musicBtn:active{
+  transform:scale(0.96);
+}
+
+/* 🎬 ENDING */
+#ending{
+  position:fixed;
+  inset:0;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  opacity:0;
+  pointer-events:none;
+  transform:scale(0.85);
+  transition:
+    opacity 2.5s ease,
+    transform 2.5s ease;
+  z-index:20;
+}
+
+#ending.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+.ending-text{
+  font-size:19px;
+  opacity:0.9;
+  line-height:1.9;
+  margin:0 auto;
+  max-width:650px;
+  padding:0 20px;
+  letter-spacing:0.3px;
+  text-align:center;
+}
+
+.ending-main{
+  font-size:22px;
+  font-weight:600;
+  display:block;
+  margin-bottom:18px;
+}
+
+.ending-line{
+  display:block;
+  margin-bottom:18px;
+}
+
+/* 🌑 FINAL BLACK SCREEN */
+#fadeBlack{
+  position:fixed;
+  inset:0;
+  background:#000;
+  opacity:0;
+  transition:opacity 4s ease;
+  pointer-events:none;
+  z-index:50;
+}
